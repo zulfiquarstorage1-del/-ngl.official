@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <title>@ngl.official</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="card-container">
+        <div class="profile-header">
+            <div class="avatar">
+                <img src="ngl.jpg" alt="NGL Logo" class="chatbox-logo-img">
+            </div>
+            <div class="profile-info">
+                <span class="username">@ngl.official</span>
+                <span class="subtext">send me anonymous messages!</span>
+            </div>
+        </div>
+
+        <div class="textarea-container">
+            <textarea id="message-input" placeholder="Are u talking to anyone??"></textarea>
+            <div class="dice-btn" id="dice-trigger">🎲</div>
+        </div>
+
+        <div class="anonymous-badge">
+            <span class="lock-icon">🔒</span> anonymous q&a
+        </div>
+
+        <div class="tap-counter">
+            👇 1281 friends just tapped the button 👇
+        </div>
+
+        <button class="cta-button">Get your own messages!</button>
+
+        <div class="footer-links">
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+        </div>
+    </div>
+
+    <script>
+        const prompts = [
+            "are you single?",
+            "do you like anyone right now?",
+            "do you prefer texting or facetime?",
+            "Are you talking to anyone??",
+            "how tall are you",
+            "do you believe in second chances?",
+            "wyd later?"
+        ];
+        
+        const textarea = document.getElementById('message-input');
+        const diceBtn = document.getElementById('dice-trigger');
+        let shuffleInterval;
+
+        // --- Textarea Placeholder Shuffle Logic ---
+        function changePlaceholderWithFade() {
+            textarea.classList.add('fade-out');
+            setTimeout(() => {
+                let currentPrompt = textarea.placeholder;
+                let newPrompt = currentPrompt;
+                while (newPrompt === currentPrompt) {
+                    newPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+                }
+                textarea.placeholder = newPrompt;
+                textarea.classList.remove('fade-out');
+            }, 250); 
+        }
+
+        function startAutoShuffle() {
+            clearInterval(shuffleInterval);
+            shuffleInterval = setInterval(() => {
+                if (textarea.value === "") {
+                    changePlaceholderWithFade();
+                }
+            }, 3000);
+        }
+
+        diceBtn.addEventListener('click', () => {
+            changePlaceholderWithFade();
+            textarea.value = "";
+            textarea.focus();
+            startAutoShuffle();
+        });
+
+        // --- Growing Counter Logic ---
+        let currentCount = 256; 
+        const counterContainer = document.querySelector('.tap-counter');
+
+        function updateCounterLoop() {
+            const step = Math.floor(Math.random() * 2) + 1;
+            currentCount += step;
+            counterContainer.innerHTML = `👇 ${currentCount} friends just tapped the button 👇`;
+            const nextInterval = Math.floor(Math.random() * 1001) + 1000;
+            setTimeout(updateCounterLoop, nextInterval);
+        }
+
+        // --- Initializer Calls ---
+        startAutoShuffle();
+        setTimeout(updateCounterLoop, Math.floor(Math.random() * 1001) + 1000);
+    </script>
+</body>
+</html>
