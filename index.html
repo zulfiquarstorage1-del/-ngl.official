@@ -2,115 +2,185 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" type="image/png" href="ngl.png">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>@ngl.official</title>
+
+    <link rel="icon" type="image/png" href="ngl.png">
     <link rel="stylesheet" href="style.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-    <div class="screen-wrapper">
-        <div class="card-container">
-            
-            <div class="main-input-card">
-                <div class="profile-header">
-                    <div class="avatar">
-                        <img src="ngl.jpg" alt="NGL Logo" class="chatbox-logo-img">
-                    </div>
-                    <div class="profile-info">
-                        <span class="username">@ngl.official</span>
-                        <span class="subtext">send me anonymous messages!</span>
+<div class="screen-wrapper">
+
+    <div class="card-container">
+
+        <!-- Main Card -->
+        <div class="main-input-card">
+
+            <!-- Header -->
+            <div class="profile-header">
+
+                <div class="avatar">
+                    <img src="ngl.jpg" alt="NGL" class="chatbox-logo-img">
+                </div>
+
+                <div class="profile-info">
+                    <div class="username">@ngl.official</div>
+                    <div class="subtext">
+                        send me anonymous messages!
                     </div>
                 </div>
 
-                <div class="textarea-container">
-                    <textarea id="message-input" placeholder="wyd later?"></textarea>
-                    <div class="dice-btn" id="dice-trigger">
+            </div>
+
+            <!-- Message Area -->
+            <div class="textarea-container">
+
+                <textarea
+                    id="message-input"
+                    placeholder="do you like anyone right now?"
+                    spellcheck="false"
+                    autocomplete="off"
+                ></textarea>
+
+                <button
+                    class="dice-btn"
+                    id="dice-trigger"
+                    type="button"
+                    aria-label="Random prompt">
+
+                    <span class="dice-bg">
                         <span class="dice-emoji">🎲</span>
-                    </div>
-                </div>
-            </div>
+                    </span>
 
-            <div class="anonymous-badge">
-                <span class="lock-icon">🔒</span> anonymous q&a
-            </div>
+                </button>
 
-            <div class="bottom-group">
-                <div class="tap-counter">
-                    👇 256 friends just tapped the button 👇
-                </div>
-
-                <button class="cta-button">Get your own messages!</button>
-
-                <div class="footer-links">
-                    <a href="#">Terms</a>
-                    <a href="#">Privacy</a>
-                </div>
             </div>
 
         </div>
+
+        <!-- Badge -->
+        <div class="anonymous-badge">
+            <span class="lock-icon">🔒</span>
+            anonymous q&a
+        </div>
+
+        <!-- Bottom -->
+        <div class="bottom-group">
+
+            <div class="tap-counter">
+                👇 256 friends just tapped the button 👇
+            </div>
+
+            <button class="cta-button">
+                Get your own messages!
+            </button>
+
+            <div class="footer-links">
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+            </div>
+
+        </div>
+
     </div>
 
-    <script>
-        const prompts = [
-            "are you single?",
-            "do you like anyone right now?",
-            "do you prefer texting or facetime?",
-            "Are you talking to anyone??",
-            "how tall are you",
-            "do you believe in second chances?",
-            "wyd later?"
-        ];
-        
-        const textarea = document.getElementById('message-input');
-        const diceBtn = document.getElementById('dice-trigger');
-        let shuffleInterval;
+</div>
 
-        function changePlaceholderWithFade() {
-            textarea.classList.add('fade-out');
-            setTimeout(() => {
-                let currentPrompt = textarea.placeholder;
-                let newPrompt = currentPrompt;
-                while (newPrompt === currentPrompt) {
-                    newPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-                }
-                textarea.placeholder = newPrompt;
-                textarea.classList.remove('fade-out');
-            }, 250); 
+<script>
+const prompts = [
+    "are you single?",
+    "do you like anyone right now?",
+    "do you prefer texting or facetime?",
+    "Are you talking to anyone??",
+    "how tall are you",
+    "do you believe in second chances?",
+    "wyd later?"
+];
+
+const textarea = document.getElementById("message-input");
+const diceBtn = document.getElementById("dice-trigger");
+
+let shuffleInterval;
+
+function changePlaceholderWithFade() {
+
+    textarea.classList.add("fade-out");
+
+    setTimeout(() => {
+
+        let current = textarea.placeholder;
+        let next = current;
+
+        while (next === current) {
+            next = prompts[Math.floor(Math.random() * prompts.length)];
         }
 
-        function startAutoShuffle() {
-            clearInterval(shuffleInterval);
-            shuffleInterval = setInterval(() => {
-                if (textarea.value === "") {
-                    changePlaceholderWithFade();
-                }
-            }, 3000);
-        }
+        textarea.placeholder = next;
 
-        diceBtn.addEventListener('click', () => {
+        textarea.classList.remove("fade-out");
+
+    }, 250);
+
+}
+
+function startAutoShuffle() {
+
+    clearInterval(shuffleInterval);
+
+    shuffleInterval = setInterval(() => {
+
+        if (textarea.value === "") {
             changePlaceholderWithFade();
-            textarea.value = "";
-            textarea.focus();
-            startAutoShuffle();
-        });
-
-        let currentCount = 256; 
-        const counterContainer = document.querySelector('.tap-counter');
-
-        function updateCounterLoop() {
-            const step = Math.floor(Math.random() * 2) + 1;
-            currentCount += step;
-            counterContainer.innerHTML = `👇 ${currentCount} friends just tapped the button 👇`;
-            const nextInterval = Math.floor(Math.random() * 1001) + 1000;
-            setTimeout(updateCounterLoop, nextInterval);
         }
 
-        startAutoShuffle();
-        setTimeout(updateCounterLoop, Math.floor(Math.random() * 1001) + 1000);
-    </script>
+    }, 3000);
+
+}
+
+diceBtn.addEventListener("click", () => {
+
+    changePlaceholderWithFade();
+
+    textarea.value = "";
+
+    textarea.focus();
+
+    startAutoShuffle();
+
+});
+
+let currentCount = 256;
+
+const counter = document.querySelector(".tap-counter");
+
+function updateCounterLoop() {
+
+    currentCount += Math.floor(Math.random() * 2) + 1;
+
+    counter.innerHTML =
+        `👇 ${currentCount} friends just tapped the button 👇`;
+
+    const next =
+        Math.floor(Math.random() * 1001) + 1000;
+
+    setTimeout(updateCounterLoop, next);
+
+}
+
+startAutoShuffle();
+
+setTimeout(updateCounterLoop,
+    Math.floor(Math.random() * 1001) + 1000);
+
+</script>
+
 </body>
 </html>
