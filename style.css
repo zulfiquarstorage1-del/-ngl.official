@@ -6,7 +6,6 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Outer layout fixing height clipping issues */
 html, body {
     height: 100%;
     width: 100%;
@@ -14,19 +13,19 @@ html, body {
 }
 
 body {
-    background: linear-gradient(180deg, #E21B6D 0%, #FC4E2A 50%, #FFA025 100%);
+    /* Precise vibrant pink-to-orange gradient mapping */
+    background: linear-gradient(180deg, #D92470 0%, #EC5631 55%, #F48221 100%);
     background-attachment: fixed;
 }
 
 .screen-wrapper {
     display: flex;
     justify-content: center;
-    align-items: space-between;
+    align-items: center;
     min-height: 100vh;
-    /* Adapts to modern mobile browser heights safely */
     min-height: -webkit-fill-available; 
     width: 100%;
-    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+    padding: 30px 24px calc(24px + env(safe-area-inset-bottom));
 }
 
 .card-container {
@@ -35,21 +34,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* Spreads layout out dynamically */
+    justify-content: space-between;
     height: 100%;
 }
 
-/* Profile Header Section */
-.profile-header {
-    background-color: #ffffff;
+/* Unified Main Box Frame */
+.main-input-card {
     width: 100%;
-    border-top-left-radius: 36px;
-    border-top-right-radius: 36px;
-    padding: 20px 24px;
+    background-color: #ffffff;
+    border-radius: 30px; /* Exact uniform corner curvature */
+    overflow: hidden;
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Header Section inside the Card */
+.profile-header {
+    width: 100%;
+    padding: 22px 24px 16px 24px;
     display: flex;
     align-items: center;
     gap: 14px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .avatar {
@@ -66,8 +70,8 @@ body {
 
 .chatbox-logo-img {
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-info {
@@ -80,32 +84,29 @@ body {
     font-size: 15px;
     font-weight: 700;
     color: #000000;
+    letter-spacing: -0.2px;
 }
 
 .subtext {
     font-size: 15px;
     font-weight: 800;
     color: #000000;
-    margin-top: 2px;
-    text-align: left;
+    margin-top: 1px;
+    letter-spacing: -0.3px;
 }
 
-/* Input Container */
+/* Exact Input Text Area Container */
 .textarea-container {
     width: 100%;
     position: relative;
-    background-color: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom-left-radius: 36px;
-    border-bottom-right-radius: 36px;
-    padding: 26px 24px;
-    height: 190px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.06);
+    /* Soft tint overlay that lets the background gradient leak through cleanly */
+    background-color: rgba(246, 212, 214, 0.7); 
+    padding: 24px 26px;
+    height: 195px;
     display: flex;
-    margin-bottom: 16px;
 }
 
+/* Writable/Placeholder Custom Style Alignment */
 textarea {
     width: 100%;
     height: 100%;
@@ -113,72 +114,85 @@ textarea {
     border: none;
     outline: none;
     resize: none;
-    font-size: 21px;
-    font-weight: 700;
-    color: rgba(0, 0, 0, 0.75); 
+    font-size: 24px; /* Exact scale size matching the image */
+    font-weight: 600; /* Clean medium-bold definition */
+    color: rgba(90, 80, 85, 0.9); 
     padding-right: 45px;
-    line-height: 1.3;
+    line-height: 1.25;
+    letter-spacing: -0.4px;
     transition: opacity 0.25s ease-in-out;
 }
 
 textarea::placeholder {
-    color: rgba(0, 0, 0, 0.35);
+    color: rgba(145, 125, 130, 0.65);
 }
 
 .fade-out {
     opacity: 0;
 }
 
+/* Dice Button Circle Styling */
 .dice-btn {
     position: absolute;
-    bottom: 20px;
+    bottom: 22px;
     right: 24px;
-    background-color: #EAEAEA;
-    width: 36px;
-    height: 36px;
+    background-color: #E3E5E8;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
     cursor: pointer;
-    box-shadow: 0px 2px 8px rgba(0,0,0,0.12);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.1s ease;
     user-select: none;
 }
 
-.dice-btn:active {
-    transform: scale(0.9);
+.dice-emoji {
+    font-size: 17px;
+    opacity: 0.8;
 }
 
+.dice-btn:active {
+    transform: scale(0.92);
+}
+
+/* Center Badge Positioning */
 .anonymous-badge {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
     color: #ffffff;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     opacity: 0.95;
-    margin-bottom: auto; /* Pushes the remaining elements to the bottom */
+    margin-top: 24px;
+    margin-bottom: auto; /* Maintains flexible phone structure layout */
 }
 
-/* Bottom Anchor Group */
+.lock-icon {
+    font-size: 14px;
+}
+
+/* Bottom elements collection wrapper */
 .bottom-group {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 35px;
 }
 
 .tap-counter {
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     color: #ffffff;
     letter-spacing: -0.2px;
     margin-bottom: 16px;
 }
 
+/* CTA Shake Button Styles */
 .cta-button {
     width: 100%;
     background-color: #000000;
@@ -187,12 +201,13 @@ textarea::placeholder {
     outline: none;
     padding: 20px 0;
     border-radius: 50px;
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
     animation: scaleShake 2s infinite ease-in-out;
     transform-origin: center;
+    letter-spacing: -0.2px;
 }
 
 .footer-links {
@@ -202,18 +217,18 @@ textarea::placeholder {
 }
 
 .footer-links a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 13px;
     text-decoration: none;
     font-weight: 600;
 }
 
-/* Animation Loop */
+/* The exact 2s Shake loop algorithm */
 @keyframes scaleShake {
     0%, 100% { transform: scale(1); }
-    15% { transform: scale(1.06) rotate(-2deg); }
-    30% { transform: scale(1.06) rotate(2deg); }
-    45% { transform: scale(1.06) rotate(-1deg); }
-    60% { transform: scale(1.06) rotate(1deg); }
-    75% { transform: scale(1.04) rotate(0deg); }
+    15% { transform: scale(1.05) rotate(-1.5deg); }
+    30% { transform: scale(1.05) rotate(1.5deg); }
+    45% { transform: scale(1.05) rotate(-1deg); }
+    60% { transform: scale(1.05) rotate(1deg); }
+    75% { transform: scale(1.03) rotate(0deg); }
 }
