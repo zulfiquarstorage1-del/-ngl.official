@@ -1,4 +1,3 @@
-/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -7,25 +6,37 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* NGL Background Gradient */
-    background: linear-gradient(180deg, #E21B6D 0%, #FC4E2A 50%, #FFA025 100%);
-    background-attachment: fixed;
-    padding: 20px;
+/* Outer layout fixing height clipping issues */
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
 }
 
-/* Main Container - Desktop constraint & Mobile fluid */
+body {
+    background: linear-gradient(180deg, #E21B6D 0%, #FC4E2A 50%, #FFA025 100%);
+    background-attachment: fixed;
+}
+
+.screen-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: space-between;
+    min-height: 100vh;
+    /* Adapts to modern mobile browser heights safely */
+    min-height: -webkit-fill-available; 
+    width: 100%;
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+}
+
 .card-container {
     width: 100%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    justify-content: space-between; /* Spreads layout out dynamically */
+    height: 100%;
 }
 
 /* Profile Header Section */
@@ -44,15 +55,19 @@ body {
 .avatar {
     width: 46px;
     height: 46px;
-    background: linear-gradient(135deg, #E21B6D, #FC4E2A);
+    background: transparent;
     border-radius: 50%;
-    color: #ffffff;
-    font-weight: 800;
-    font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
-    letter-spacing: -0.5px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.chatbox-logo-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
 .profile-info {
@@ -72,9 +87,10 @@ body {
     font-weight: 800;
     color: #000000;
     margin-top: 2px;
+    text-align: left;
 }
 
-/* Input / Textarea Box Container */
+/* Input Container */
 .textarea-container {
     width: 100%;
     position: relative;
@@ -87,9 +103,9 @@ body {
     height: 190px;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.06);
     display: flex;
+    margin-bottom: 16px;
 }
 
-/* Writable Active Textarea Styling */
 textarea {
     width: 100%;
     height: 100%;
@@ -102,21 +118,17 @@ textarea {
     color: rgba(0, 0, 0, 0.75); 
     padding-right: 45px;
     line-height: 1.3;
-    
-    /* Smooth transition for the opacity styling */
     transition: opacity 0.25s ease-in-out;
-}
-
-/* Class triggered by JavaScript to drop opacity down to zero */
-.fade-out {
-    opacity: 0;
 }
 
 textarea::placeholder {
     color: rgba(0, 0, 0, 0.35);
 }
 
-/* Dice Button Layout */
+.fade-out {
+    opacity: 0;
+}
+
 .dice-btn {
     position: absolute;
     bottom: 20px;
@@ -139,9 +151,7 @@ textarea::placeholder {
     transform: scale(0.9);
 }
 
-/* Anonymous Q&A Label */
 .anonymous-badge {
-    margin-top: 18px;
     font-size: 15px;
     font-weight: 500;
     color: #ffffff;
@@ -149,24 +159,27 @@ textarea::placeholder {
     align-items: center;
     gap: 6px;
     opacity: 0.95;
+    margin-bottom: auto; /* Pushes the remaining elements to the bottom */
 }
 
-.lock-icon {
-    font-size: 13px;
+/* Bottom Anchor Group */
+.bottom-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
 }
 
-/* Counter / Friends Tapped Label */
 .tap-counter {
-    margin-top: 60px;
     font-size: 16px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.2px;
+    margin-bottom: 16px;
 }
 
-/* Animated Call-to-Action Button */
 .cta-button {
-    margin-top: 18px;
     width: 100%;
     background-color: #000000;
     color: #ffffff;
@@ -178,13 +191,10 @@ textarea::placeholder {
     font-weight: 700;
     cursor: pointer;
     box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
-    
-    /* 2-second shake cycle */
     animation: scaleShake 2s infinite ease-in-out;
     transform-origin: center;
 }
 
-/* Footer Section */
 .footer-links {
     margin-top: 24px;
     display: flex;
@@ -198,49 +208,12 @@ textarea::placeholder {
     font-weight: 600;
 }
 
-.footer-links a:hover {
-    color: #ffffff;
-}
-/* Update your .avatar class in style.css */
-.avatar {
-    width: 46px;
-    height: 46px;
-    background: transparent; /* Remove the old gradient */
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Ensure image fits round container */
-}
-
-/* Add this new class for the logo image itself */
-.chatbox-logo-img {
-    width: 100%;
-    height: auto;
-    object-fit: contain; /* Preserve aspect ratio */
-}
-
-/* Keyframe Loop Animation Logic */
+/* Animation Loop */
 @keyframes scaleShake {
-    0% {
-        transform: scale(1);
-    }
-    15% {
-        transform: scale(1.06) rotate(-2deg);
-    }
-    30% {
-        transform: scale(1.06) rotate(2deg);
-    }
-    45% {
-        transform: scale(1.06) rotate(-1deg);
-    }
-    60% {
-        transform: scale(1.06) rotate(1deg);
-    }
-    75% {
-        transform: scale(1.04) rotate(0deg);
-    }
-    100% {
-        transform: scale(1);
-    }
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.06) rotate(-2deg); }
+    30% { transform: scale(1.06) rotate(2deg); }
+    45% { transform: scale(1.06) rotate(-1deg); }
+    60% { transform: scale(1.06) rotate(1deg); }
+    75% { transform: scale(1.04) rotate(0deg); }
 }
