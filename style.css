@@ -1,234 +1,364 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', "Avenir Next", Helvetica, Arial, sans-serif;
-    -webkit-tap-highlight-color: transparent;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Inter",sans-serif;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html, body {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow-x:hidden;
 }
 
-body {
-    /* Precise vibrant pink-to-orange gradient mapping */
-    background: linear-gradient(180deg, #D92470 0%, #EC5631 55%, #F48221 100%);
-    background-attachment: fixed;
+body{
+    background:linear-gradient(180deg,#df1d79 0%,#f24b44 55%,#ff7d21 100%);
+    background-attachment:fixed;
 }
 
-.screen-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    min-height: -webkit-fill-available; 
-    width: 100%;
-    padding: 30px 24px calc(24px + env(safe-area-inset-bottom));
+.screen-wrapper{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:35px 22px;
 }
 
-.card-container {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
+.card-container{
+    width:100%;
+    max-width:640px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
-/* Unified Main Box Frame */
-.main-input-card {
-    width: 100%;
-    background-color: #ffffff;
-    border-radius: 30px; /* Exact uniform corner curvature */
-    overflow: hidden;
-    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.1);
+/* ===========================
+      MAIN CARD
+=========================== */
+
+.main-input-card{
+    width:100%;
+    background:#fff;
+    border-radius:34px;
+    overflow:hidden;
+    box-shadow:0 18px 45px rgba(0,0,0,.12);
 }
 
-/* Profile Header Section inside the Card */
-.profile-header {
-    width: 100%;
-    padding: 22px 24px 16px 24px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
+/* ===========================
+      HEADER
+=========================== */
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    padding:30px 30px 26px;
+    gap:18px;
+    background:#fff;
 }
 
-.avatar {
-    width: 46px;
-    height: 46px;
-    background: transparent;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    flex-shrink: 0;
+.avatar{
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    overflow:hidden;
+    flex-shrink:0;
 }
 
-.chatbox-logo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.chatbox-logo-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-.profile-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.profile-info{
+    display:flex;
+    flex-direction:column;
 }
 
-.username {
-    font-size: 15px;
-    font-weight: 700;
-    color: #000000;
-    letter-spacing: -0.2px;
+.username{
+    font-size:19px;
+    font-weight:500;
+    color:#111;
+    letter-spacing:-0.6px;
 }
 
-.subtext {
-    font-size: 15px;
-    font-weight: 800;
-    color: #000000;
-    margin-top: 1px;
-    letter-spacing: -0.3px;
+.subtext{
+    margin-top:2px;
+    font-size:19px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.7px;
+    line-height:1.1;
 }
 
-/* Exact Input Text Area Container */
-.textarea-container {
-    width: 100%;
-    position: relative;
-    /* Soft tint overlay that lets the background gradient leak through cleanly */
-    background-color: rgba(246, 212, 214, 0.7); 
-    padding: 24px 26px;
-    height: 195px;
-    display: flex;
+/* ===========================
+      MESSAGE AREA
+=========================== */
+
+.textarea-container{
+    position:relative;
+    width:100%;
+    height:325px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ef8db9 0%,
+        #f3a0a8 45%,
+        #f8a183 100%
+    );
+
+    padding:38px 34px;
 }
 
-/* Writable/Placeholder Custom Style Alignment */
-textarea {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    resize: none;
-    font-size: 24px; /* Exact scale size matching the image */
-    font-weight: 600; /* Clean medium-bold definition */
-    color: rgba(90, 80, 85, 0.9); 
-    padding-right: 45px;
-    line-height: 1.25;
-    letter-spacing: -0.4px;
-    transition: opacity 0.25s ease-in-out;
+textarea{
+    width:100%;
+    height:100%;
+
+    background:transparent;
+    border:none;
+    outline:none;
+    resize:none;
+
+    font-size:30px;
+    font-weight:600;
+    line-height:1.22;
+    letter-spacing:-1px;
+
+    color:rgba(120,78,88,.60);
+
+    padding-right:85px;
+
+    transition:.25s;
 }
 
-textarea::placeholder {
-    color: rgba(145, 125, 130, 0.65);
+textarea::placeholder{
+    color:rgba(120,78,88,.60);
+    font-weight:600;
 }
 
-.fade-out {
-    opacity: 0;
+.fade-out{
+    opacity:0;
 }
 
-/* Dice Button Circle Styling */
-.dice-btn {
-    position: absolute;
-    bottom: 22px;
-    right: 24px;
-    background-color: #E3E5E8;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.1s ease;
-    user-select: none;
+/* ===========================
+      DICE BUTTON
+=========================== */
+
+.dice-btn{
+    position:absolute;
+    right:24px;
+    bottom:24px;
+
+    width:58px;
+    height:58px;
+
+    border:none;
+    outline:none;
+    cursor:pointer;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.28);
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    transition:.15s;
 }
 
-.dice-emoji {
-    font-size: 17px;
-    opacity: 0.8;
+.dice-btn:hover{
+    transform:scale(1.05);
 }
 
-.dice-btn:active {
-    transform: scale(0.92);
+.dice-btn:active{
+    transform:scale(.92);
 }
 
-/* Center Badge Positioning */
-.anonymous-badge {
-    font-size: 16px;
-    font-weight: 500;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    opacity: 0.95;
-    margin-top: 24px;
-    margin-bottom: auto; /* Maintains flexible phone structure layout */
+.dice-bg{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+
+    background:rgba(255,255,255,.35);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-.lock-icon {
-    font-size: 14px;
+.dice-emoji{
+    font-size:27px;
 }
 
-/* Bottom elements collection wrapper */
-.bottom-group {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 35px;
+/* ===========================
+      BADGE
+=========================== */
+
+.anonymous-badge{
+    margin-top:28px;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:#fff;
+    font-size:17px;
+    font-weight:500;
 }
 
-.tap-counter {
-    font-size: 16px;
-    font-weight: 600;
-    color: #ffffff;
-    letter-spacing: -0.2px;
-    margin-bottom: 16px;
+.lock-icon{
+    font-size:15px;
 }
 
-/* CTA Shake Button Styles */
-.cta-button {
-    width: 100%;
-    background-color: #000000;
-    color: #ffffff;
-    border: none;
-    outline: none;
-    padding: 20px 0;
-    border-radius: 50px;
-    font-size: 19px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
-    animation: scaleShake 2s infinite ease-in-out;
-    transform-origin: center;
-    letter-spacing: -0.2px;
+/* ===========================
+      BOTTOM
+=========================== */
+
+.bottom-group{
+    width:100%;
+    margin-top:36px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
-.footer-links {
-    margin-top: 24px;
-    display: flex;
-    gap: 16px;
+.tap-counter{
+    color:#fff;
+    font-size:18px;
+    font-weight:600;
+    text-align:center;
+    letter-spacing:-.3px;
+    margin-bottom:18px;
 }
 
-.footer-links a {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 13px;
-    text-decoration: none;
-    font-weight: 600;
+.cta-button{
+    width:100%;
+    border:none;
+    cursor:pointer;
+
+    background:#000;
+    color:#fff;
+
+    border-radius:999px;
+
+    padding:21px;
+
+    font-size:20px;
+    font-weight:700;
+
+    letter-spacing:-.3px;
+
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
+
+    animation:buttonBounce 2s infinite;
 }
 
-/* The exact 2s Shake loop algorithm */
-@keyframes scaleShake {
-    0%, 100% { transform: scale(1); }
-    15% { transform: scale(1.05) rotate(-1.5deg); }
-    30% { transform: scale(1.05) rotate(1.5deg); }
-    45% { transform: scale(1.05) rotate(-1deg); }
-    60% { transform: scale(1.05) rotate(1deg); }
-    75% { transform: scale(1.03) rotate(0deg); }
+.footer-links{
+    margin-top:26px;
+    display:flex;
+    gap:18px;
+}
+
+.footer-links a{
+    color:rgba(255,255,255,.75);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* ===========================
+      ANIMATION
+=========================== */
+
+@keyframes buttonBounce{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    15%{
+        transform:scale(1.05) rotate(-1.5deg);
+    }
+
+    30%{
+        transform:scale(1.05) rotate(1.5deg);
+    }
+
+    45%{
+        transform:scale(1.05) rotate(-1deg);
+    }
+
+    60%{
+        transform:scale(1.05) rotate(1deg);
+    }
+
+    75%{
+        transform:scale(1.03);
+    }
+
+}
+
+/* ===========================
+      MOBILE
+=========================== */
+
+@media (max-width:480px){
+
+    .screen-wrapper{
+        padding:24px 18px;
+    }
+
+    .profile-header{
+        padding:22px;
+    }
+
+    .avatar{
+        width:52px;
+        height:52px;
+    }
+
+    .username{
+        font-size:17px;
+    }
+
+    .subtext{
+        font-size:17px;
+    }
+
+    .textarea-container{
+        height:285px;
+        padding:32px 26px;
+    }
+
+    textarea{
+        font-size:25px;
+        padding-right:72px;
+    }
+
+    .dice-btn{
+        width:54px;
+        height:54px;
+    }
+
+    .dice-bg{
+        width:42px;
+        height:42px;
+    }
+
+    .dice-emoji{
+        font-size:24px;
+    }
+
+    .cta-button{
+        font-size:18px;
+        padding:19px;
+    }
+
 }
