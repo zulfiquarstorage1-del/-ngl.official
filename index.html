@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ngl.official</title>
+
+    <link rel="icon" href="favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="card-container">
+
+        <!-- Profile -->
+        <div class="profile-header">
+            <img src="ngl.png" class="avatar-img" alt="NGL">
+            <div class="profile-info">
+                <span class="username">@ngl.official</span>
+                <span class="subtext">send me anonymous messages!</span>
+            </div>
+        </div>
+
+        <!-- Textbox -->
+        <div class="textarea-container">
+            <textarea
+                id="message-input"
+                rows="1"
+                placeholder="Are u talking to anyone??"
+            ></textarea>
+
+            <div class="dice-btn" id="dice-trigger">🎲</div>
+        </div>
+
+        <!-- Anonymous -->
+        <div class="anonymous-badge">
+            <span class="lock-icon">🔒</span>
+            anonymous q&a
+        </div>
+
+        <!-- Send button: only shown once the user has typed something -->
+        <button class="send-button" id="send-btn">Send!</button>
+
+        <!-- Footer: hidden while the textarea is focused, shown again on blur -->
+        <div class="hideable-footer-content" id="footer-group">
+
+            <div class="tap-counter">
+                👇 456 friends just tapped the button 👇
+            </div>
+
+            <button class="cta-button">Get your own messages!</button>
+
+            <div class="footer-links">
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Register / Sign In Popup -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-card">
+
+            <button class="modal-close" id="modal-close">&times;</button>
+
+            <h2 class="modal-title">Sign in to <span id="site-name-slot"></span></h2>
+
+            <div class="modal-tabs">
+                <button class="modal-tab active" id="tab-signin" data-tab="signin">Sign In</button>
+                <button class="modal-tab" id="tab-register" data-tab="register">Register</button>
+            </div>
+
+            <!-- Sign In panel -->
+            <div class="modal-panel" id="panel-signin">
+                <input type="email" class="modal-input" id="signin-email" placeholder="Email" autocomplete="email">
+                <input type="password" class="modal-input" id="signin-password" placeholder="Password" autocomplete="current-password">
+                <button class="modal-submit" id="signin-submit">Sign In</button>
+            </div>
+
+            <!-- Register panel -->
+            <div class="modal-panel hidden" id="panel-register">
+                <input type="email" class="modal-input" id="register-email" placeholder="Email" autocomplete="email">
+                <input type="password" class="modal-input" id="register-password" placeholder="Set password" autocomplete="new-password">
+
+                <label class="modal-checkbox-row">
+                    <input type="checkbox" id="register-agree">
+                    <span>
+                        I agree to the
+                        <a href="https://ngl.link/p/terms" target="_blank" rel="noopener noreferrer">terms</a>
+                        and
+                        <a href="https://ngl.link/p/privacy" target="_blank" rel="noopener noreferrer">privacy</a>
+                        conditions
+                    </span>
+                </label>
+
+                <button class="modal-submit" id="register-submit" disabled>Get verification code</button>
+                <p class="modal-hint">We'll email you a code to verify your account.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ---- EDIT THIS to change the site name shown in the popup ----
+        const SITE_NAME = "NGL";
+        const prompts = [
+            "are you single?",
+            "do you like anyone right now?",
+            "do you prefer texting or facetime?",
+            "Are you talking to anyone??",
+            "how tall are you",
+            "do you believe in second chances?",
+            "wyd later?"
+        ];
+
+        const textarea = document.getElementById("message-input");
+        const diceBtn = document.getElementById("dice-trigger");
+        const sendBtn = document.getElementById("send-btn");
+        const footerGroup = document.getElementById("footer-group");
+
+        const modalOverlay = document.getElementById("modal-overlay");
+        const modalClose = document.getElementById("modal-close");
+        const siteNameSlot = document.getElementById("site-name-slot");
+        const tabSignin = document.getElementById("tab-signin");
+        const tabRegister = document.getElementById("tab-register");
+        const panelSignin = document.getElementById("panel-signin");
+        const panelRegister = document.getElementById("panel-register");
+
+        siteNameSlot.textContent = SITE_NAME;
+
+        let shuffleInterval;
+
+        /* ---------------- Placeholder shuffle ---------------- */
+        function changePlaceholderWithFade() {
+            textarea.classList.add("fade-out");
+            setTimeout(() => {
+                let current = textarea.placeholder;
+                let next = current;
+                while (next === current) {
+                    next = prompts[Math.floor(Math.random() * prompts.length)];
+                }
+                textarea.placeholder = next;
+                textarea.classList.remove("fade-out");
+            }, 250);
+        }
+
+        function startAutoShuffle() {
+            clearInterval(shuffleInterval);
+            shuffleInterval = setInterval(() => {
+                if (textarea.value === "") {
+                    changePlaceholderWithFade();
+                }
+            }, 3000);
+        }
+
+        /* ---------------- Dice button ---------------- */
+        diceBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            textarea.value = "";
+            sendBtn.classList.remove("visible");
+            changePlaceholderWithFade();
+            textarea.focus();
+            startAutoShuffle();
+        });
+
+        /* ---------------- Change 1: hide/show footer on focus/blur ---------------- */
+        textarea.addEventListener("focus", () => {
+            footerGroup.classList.add("hidden");
+        });
+
+        textarea.addEventListener("blur", () => {
+            footerGroup.classList.remove("hidden");
+        });
+
+        // Fallback: clicking anywhere outside the textbox blurs it
+        // (covers taps on the background/card that aren't natural blur triggers)
+        document.addEventListener("click", (e) => {
+            const isInputArea = textarea.contains(e.target) || diceBtn.contains(e.target);
+            if (!isInputArea && document.activeElement === textarea) {
+                textarea.blur();
+            }
+        });
+
+        /* ---------------- Change 2: send button shows only with text ---------------- */
+        textarea.addEventListener("input", () => {
+            // keep it to a single line
+            textarea.value = textarea.value.replace(/(\r\n|\n|\r)/gm, "");
+
+            if (textarea.value.trim().length > 0) {
+                sendBtn.classList.add("visible");
+            } else {
+                sendBtn.classList.remove("visible");
+            }
+        });
+
+        /* ---------------- Popup: open on Send ---------------- */
+        function openModal() {
+            modalOverlay.classList.add("visible");
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove("visible");
+        }
+
+        sendBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (textarea.value.trim().length > 0) {
+                openModal();
+            }
+        });
+
+        modalClose.addEventListener("click", closeModal);
+
+        // click on the dimmed backdrop (not the card itself) closes the popup
+        modalOverlay.addEventListener("click", (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        /* ---------------- Popup: switch between Sign In / Register ---------------- */
+        function showTab(tab) {
+            const isSignin = tab === "signin";
+            tabSignin.classList.toggle("active", isSignin);
+            tabRegister.classList.toggle("active", !isSignin);
+            panelSignin.classList.toggle("hidden", !isSignin);
+            panelRegister.classList.toggle("hidden", isSignin);
+        }
+
+        tabSignin.addEventListener("click", () => showTab("signin"));
+        tabRegister.addEventListener("click", () => showTab("register"));
+
+        document.getElementById("signin-submit").addEventListener("click", () => {
+            // hook up your sign-in request here
+            console.log("Sign in:", {
+                email: document.getElementById("signin-email").value,
+                password: document.getElementById("signin-password").value
+            });
+        });
+
+        document.getElementById("register-submit").addEventListener("click", () => {
+            // hook up your "send verification code" request here
+            console.log("Register:", {
+                email: document.getElementById("register-email").value,
+                password: document.getElementById("register-password").value
+            });
+        });
+
+        /* ---------------- Popup: require terms agreement before registering ---------------- */
+        const registerAgree = document.getElementById("register-agree");
+        const registerSubmit = document.getElementById("register-submit");
+
+        registerAgree.addEventListener("change", () => {
+            registerSubmit.disabled = !registerAgree.checked;
+        });
+
+        /* ---------------- Tap counter ---------------- */
+        let currentCount = 456;
+        const counter = document.querySelector(".tap-counter");
+
+        function updateCounter() {
+            currentCount += Math.floor(Math.random() * 2) + 1;
+            counter.innerHTML = `👇 ${currentCount} friends just tapped the button 👇`;
+            const next = Math.floor(Math.random() * 1001) + 1000;
+            setTimeout(updateCounter, next);
+        }
+
+        startAutoShuffle();
+        setTimeout(updateCounter, Math.floor(Math.random() * 1001) + 1000);
+    </script>
+</body>
+</html>

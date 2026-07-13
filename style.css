@@ -1,0 +1,493 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', "Avenir Next", Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #E21B6D 0%, #FC4E2A 50%, #FFA025 100%);
+    background-attachment: fixed;
+    padding: 20px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card-container {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.profile-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #ffffff;
+    padding: 20px 24px;
+    border-radius: 36px 36px 0 0;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.avatar-img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.username {
+    font-size: 15px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.subtext {
+    font-size: 15px;
+    font-weight: 800;
+    color: #000000;
+    margin-top: 2px;
+}
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.textarea-container {
+    position: relative;
+    width: 100%;
+    height: 190px;
+    padding: 0 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 0 0 36px 36px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+#message-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-right: 42px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.75);
+    font-size: clamp(15px, 4.6vw, 20px);
+    font-weight: 700;
+    transition: opacity 0.25s ease-in-out;
+}
+
+#message-input::-webkit-scrollbar {
+    display: none;
+}
+
+#message-input::placeholder {
+    color: rgba(0, 0, 0, 0.35);
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+/* =========================
+   DICE BUTTON
+========================= */
+
+.dice-btn {
+    position: absolute;
+    right: 24px;
+    bottom: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+    transition: transform 0.1s ease;
+    z-index: 5;
+}
+
+.dice-btn:active {
+    transform: scale(0.9);
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.anonymous-badge {
+    margin-top: 18px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    opacity: 0.95;
+}
+
+.lock-icon {
+    font-size: 13px;
+}
+
+/* =========================
+   SEND BUTTON
+   Change 2: hidden until a character is typed, then fades/scales in
+========================= */
+
+.send-button {
+    width: 100%;
+    margin-top: 24px;
+    padding: 18px 0;
+    border: none;
+    border-radius: 50px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.send-button.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+/* =========================
+   FOOTER
+   Change 1: hidden while textarea is focused, shown again on blur
+========================= */
+
+.hideable-footer-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    max-height: 500px;
+    opacity: 1;
+    transition: opacity 0.25s ease, max-height 0.25s ease;
+}
+
+.hideable-footer-content.hidden {
+    opacity: 0;
+    max-height: 0;
+    pointer-events: none;
+}
+
+.tap-counter {
+    margin-top: 60px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.cta-button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 20px 0;
+    border: none;
+    border-radius: 50px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+    animation: scaleShake 2s infinite ease-in-out;
+    transform-origin: center;
+}
+
+.footer-links {
+    margin-top: 24px;
+    display: flex;
+    gap: 16px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+}
+
+/* =========================
+   AUTH MODAL
+========================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+
+    z-index: 100;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+
+    background: linear-gradient(180deg, #ffffff 0%, #ffe9e2 100%);
+    border-radius: 32px;
+    padding: 32px 26px 28px;
+
+    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.3);
+
+    transform: scale(0.92) translateY(10px);
+    transition: transform 0.25s ease;
+}
+
+.modal-overlay.visible .modal-card {
+    transform: scale(1) translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.06);
+    color: #000000;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 22px;
+    padding-right: 10px;
+}
+
+.modal-title span {
+    background: linear-gradient(90deg, #E21B6D 0%, #FC4E2A 60%, #FFA025 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.modal-tabs {
+    display: flex;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 50px;
+    padding: 4px;
+    margin-bottom: 22px;
+}
+
+.modal-tab {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 10px 0;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-tab.active {
+    background: #000000;
+    color: #ffffff;
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.modal-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-panel.hidden {
+    display: none;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 15px 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    color: #000000;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-input::placeholder {
+    color: rgba(0, 0, 0, 0.35);
+}
+
+.modal-input:focus {
+    border-color: #FC4E2A;
+    box-shadow: 0 0 0 3px rgba(252, 78, 42, 0.15);
+}
+
+.modal-submit {
+    width: 100%;
+    margin-top: 6px;
+    padding: 16px 0;
+    border: none;
+    border-radius: 50px;
+
+    background: #000000;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow: 0px 8px 22px rgba(0, 0, 0, 0.25);
+    transition: transform 0.1s ease;
+}
+
+.modal-submit:active {
+    transform: scale(0.97);
+}
+
+.modal-checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: 2px;
+    text-align: left;
+}
+
+.modal-checkbox-row input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    accent-color: #FC4E2A;
+    cursor: pointer;
+}
+
+.modal-checkbox-row span {
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-checkbox-row a {
+    color: #E21B6D;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.modal-checkbox-row a:hover {
+    text-decoration: underline;
+}
+
+.modal-submit:disabled {
+    background: rgba(0, 0, 0, 0.25);
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.modal-submit:disabled:active {
+    transform: none;
+}
+
+.modal-hint {
+    margin-top: 4px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes scaleShake {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.06) rotate(-2deg); }
+    30% { transform: scale(1.06) rotate(2deg); }
+    45% { transform: scale(1.06) rotate(-1deg); }
+    60% { transform: scale(1.06) rotate(1deg); }
+    75% { transform: scale(1.04) rotate(0deg); }
+    100% { transform: scale(1); }
+}
